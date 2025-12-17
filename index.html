@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Streaming Premium</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #000;
+      color: #fff;
+      padding: 15px;
+      margin: 0;
+    }
+
+    h1, h2 {
+      text-align: center;
+      margin: 5px 0;
+    }
+
+    .productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .producto {
+      background: #111;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,.6);
+    }
+
+    .logo {
+      width: 65px;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #25D366, #1ebc5a);
+      border: none;
+      color: white;
+      padding: 12px;
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .carrito, .checkout {
+      background: #111;
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,.6);
+    }
+
+    .item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+      gap: 10px;
+    }
+
+    .item button {
+      background: #e74c3c;
+      padding: 6px 10px;
+      font-size: 14px;
+      width: auto;
+    }
+
+    .alias {
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 26px; }
+      h2 { font-size: 16px; }
+      .logo { width: 55px; }
+      button { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+<h1>📺 Streaming Premium</h1>
+<h2>Activación rápida • Soporte • Garantía</h2>
+<p style="text-align:center; color:#ccc;">✔ Cuentas activas • ✔ Reposición garantizada • ✔ Atención rápida</p>
+
+<div class="productos">
+
+  <div class="producto">
+    <img src="img/netflix.png" class="logo">
+    <h3>Netflix</h3>
+    <p>1 Pantalla • 30 días</p>
+    <p><b>$5.500</b></p>
+    <button onclick="agregar('Netflix 30 días (1 Pantalla)', 5500)">Agregar</button>
+  </div>
+
+  <div class="producto">
+    <img src="img/hbomax.png" class="logo">
+    <h3>HBO Max</h3>
+    <p>1 Pantalla • 30 días</p>
+    <p><b>$3.000</b></p>
+    <button onclick="agregar('HBO Max 30 días (1 Pantalla)', 3000)">Agregar</button>
+  </div>
+
+  <div class="producto">
+    <img src="img/apple.png" class="logo">
+    <h3>Apple TV+</h3>
+    <p>1 Pantalla • 30 días (sin MLS)</p>
+    <p><b>$2.800</b></p>
+    <button onclick="agregar('Apple TV+ 30 días (1 Pantalla)', 2800)">Agregar</button>
+  </div>
+
+  <div class="producto">
+    <img src="img/youtube.png" class="logo">
+    <h3>YouTube Premium</h3>
+    <p>1 Pantalla • 30 días</p>
+    <p><b>$3.500</b></p>
+    <button onclick="agregar('YouTube Premium 30 días (1 Pantalla)', 3500)">Agregar</button>
+  </div>
+
+  <div class="producto">
+    <img src="img/disney.png" class="logo">
+    <h3>Disney+</h3>
+    <p>1 Pantalla • 30 días</p>
+    <p><b>$4.500</b></p>
+    <button onclick="agregar('Disney+ 30 días (1 Pantalla)', 4500)">Agregar</button>
+  </div>
+
+  <div class="producto">
+    <img src="img/prime.png" class="logo">
+    <h3>Prime Video</h3>
+    <p>1 Pantalla • 30 días</p>
+    <p><b>$2.900</b></p>
+    <button onclick="agregar('Prime Video 30 días (1 Pantalla)', 2900)">Agregar</button>
+  </div>
+
+  <div class="producto">
+    <img src="img/vix.png" class="logo">
+    <h3>Vix Premium</h3>
+    <p>1 Pantalla • 30 días</p>
+    <p><b>$2.500</b></p>
+    <button onclick="agregar('Vix Premium 30 días (1 Pantalla)', 2500)">Agregar</button>
+  </div>
+
+  <div class="producto">
+    <img src="img/viki.png" class="logo">
+    <h3>Viki Rakuten</h3>
+    <p>1 Pantalla • 30 días</p>
+    <p><b>$2.800</b></p>
+    <button onclick="agregar('Viki Rakuten 30 días (1 Pantalla)', 2800)">Agregar</button>
+  </div>
+
+  <div class="producto">
+    <img src="img/crunchyroll.png" class="logo">
+    <h3>Crunchyroll</h3>
+    <p>1 Pantalla • 30 días</p>
+    <p><b>$2.900</b></p>
+    <button onclick="agregar('Crunchyroll 30 días (1 Pantalla)', 2900)">Agregar</button>
+  </div>
+
+  <div class="producto">
+    <h3>TV Digital</h3>
+    <p>1 Pantalla • 30 días</p>
+    <p><b>$2.900</b></p>
+    <button onclick="agregar('TV Digital 30 días (1 Pantalla)', 2900)">Agregar</button>
+  </div>
+
+</div>
+
+<div class="carrito">
+  <h2>🛒 Pedido</h2>
+  <div id="lista"></div>
+  <h3>Total: $<span id="total">0</span></h3>
+  <button onclick="vaciarCarrito()">🗑 Vaciar carrito</button>
+</div>
+
+<div class="checkout">
+  <p>💳 <b>Pago por transferencia</b></p>
+  <p>Alias:</p>
+  <p class="alias">SREYES2460.NX.ARG</p>
+  <p>Luego del pago enviá el pedido por WhatsApp</p>
+  <button onclick="enviarPedido()">📲 Enviar pedido</button>
+</div>
+
+<script>
+  let carrito = [];
+  let total = 0;
+
+  function agregar(nombre, precio) {
+    carrito.push({ nombre, precio });
+    total += precio;
+    render();
+  }
+
+  function eliminar(index) {
+    total -= carrito[index].precio;
+    carrito.splice(index, 1);
+    render();
+  }
+
+  function render() {
+    const lista = document.getElementById("lista");
+    lista.innerHTML = "";
+    carrito.forEach((p, i) => {
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `<span>${p.nombre} - $${p.precio.toLocaleString('es-AR')}</span><button onclick=\"eliminar(${i})\">✖</button>`;
+      lista.appendChild(div);
+    });
+    document.getElementById("total").innerText = total.toLocaleString('es-AR');
+  }
+
+  function vaciarCarrito() {
+    carrito = [];
+    total = 0;
+    render();
+  }
+
+  function enviarPedido() {
+    if (carrito.length === 0) {
+      alert("Seleccioná al menos un servicio");
+      return;
+    }
+
+    let mensaje = "Hola! Quiero contratar:%0A%0A";
+    carrito.forEach(p => {
+      mensaje += `• ${p.nombre} - $${p.precio}%0A`;
+    });
+    mensaje += `%0A💰 Total: $${total}`;
+    mensaje += `%0A💳 Pago por transferencia`;
+    mensaje += `%0AAlias: SREYES2460.NX.ARG`;
+
+    const telefono = "5491161124784";
+    window.open(`https://wa.me/${telefono}?text=${mensaje}`, "_blank");
+  }
+</script>
+
+</body>
+</html>
