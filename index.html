@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Streaming Premium</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  font-family:Arial, sans-serif;
+  background:#000;
+  color:#fff;
+  margin:0;
+  padding:15px;
+}
+
+h1,h2{text-align:center;margin:5px 0;}
+
+.productos{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:15px;
+  max-width:1000px;
+  margin:auto;
+}
+
+.producto{
+  background:#111;
+  border-radius:12px;
+  padding:15px;
+  text-align:center;
+  position:relative;
+  box-shadow:0 4px 10px rgba(0,0,0,.6);
+}
+
+.logo{width:65px;margin-bottom:10px;}
+
+.poster{
+  width:100%;
+  max-width:180px;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+/* ESTRENO */
+.estreno{
+  position:absolute;
+  top:10px;
+  left:10px;
+  background:#e50914;
+  padding:5px 10px;
+  font-size:12px;
+  font-weight:bold;
+  border-radius:6px;
+}
+
+/* MAS VENDIDO */
+.vendido{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:#f1c40f;
+  color:#000;
+  padding:5px 10px;
+  font-size:12px;
+  font-weight:bold;
+  border-radius:6px;
+}
+
+button{
+  background:linear-gradient(135deg,#25D366,#1ebc5a);
+  border:none;
+  color:#fff;
+  padding:12px;
+  width:100%;
+  border-radius:8px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.carrito,.checkout{
+  background:#111;
+  max-width:500px;
+  margin:20px auto;
+  padding:15px;
+  border-radius:10px;
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:6px;
+}
+
+.item button{
+  background:#e74c3c;
+  padding:5px 10px;
+  width:auto;
+  font-size:14px;
+}
+
+.alias{
+  font-size:18px;
+  font-weight:bold;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📺 Streaming Premium</h1>
+<h2>Activación rápida • Soporte • Garantía</h2>
+<p style="text-align:center;color:#ccc;">✔ Cuentas activas • ✔ Reposición garantizada</p>
+
+<!-- STREAMING -->
+<div class="productos">
+
+<div class="producto">
+<span class="vendido">⭐ MÁS VENDIDO</span>
+<img src="img/netflix.png" class="logo">
+<h3>Netflix</h3>
+<p>1 Pantalla • 30 días</p>
+<p><b>$5.500</b></p>
+<button onclick="agregar('Netflix 30 días',5500)">Agregar</button>
+</div>
+
+<div class="producto">
+<img src="img/hbomax.png" class="logo">
+<h3>HBO Max</h3>
+<p>1 Pantalla • 30 días</p>
+<p><b>$3.000</b></p>
+<button onclick="agregar('HBO Max 30 días',3000)">Agregar</button>
+</div>
+
+<div class="producto">
+<img src="img/apple.png" class="logo">
+<h3>Apple TV+</h3>
+<p>1 Pantalla • 30 días</p>
+<p><b>$2.800</b></p>
+<button onclick="agregar('Apple TV+ 30 días',2800)">Agregar</button>
+</div>
+
+<div class="producto">
+<img src="img/youtube.png" class="logo">
+<h3>YouTube Premium</h3>
+<p>1 Pantalla • 30 días</p>
+<p><b>$3.500</b></p>
+<button onclick="agregar('YouTube Premium 30 días',3500)">Agregar</button>
+</div>
+
+<div class="producto">
+<img src="img/disney.png" class="logo">
+<h3>Disney+</h3>
+<p>1 Pantalla • 30 días</p>
+<p><b>$4.500</b></p>
+<button onclick="agregar('Disney+ 30 días',4500)">Agregar</button>
+</div>
+
+<div class="producto">
+<span class="vendido">⭐ MÁS VENDIDO</span>
+<img src="img/prime.png" class="logo">
+<h3>Prime Video</h3>
+<p>1 Pantalla • 30 días</p>
+<p><b>$2.900</b></p>
+<button onclick="agregar('Prime Video 30 días',2900)">Agregar</button>
+</div>
+
+<div class="producto">
+<img src="img/vix.png" class="logo">
+<h3>Vix Premium</h3>
+<p>1 Pantalla • 30 días</p>
+<p><b>$2.500</b></p>
+<button onclick="agregar('Vix Premium 30 días',2500)">Agregar</button>
+</div>
+
+<div class="producto">
+<img src="img/viki.png" class="logo">
+<h3>Viki Rakuten</h3>
+<p>1 Pantalla • 30 días</p>
+<p><b>$2.800</b></p>
+<button onclick="agregar('Viki Rakuten 30 días',2800)">Agregar</button>
+</div>
+
+<div class="producto">
+<img src="img/crunchyroll.png" class="logo">
+<h3>Crunchyroll</h3>
+<p>1 Pantalla • 30 días</p>
+<p><b>$2.900</b></p>
+<button onclick="agregar('Crunchyroll 30 días',2900)">Agregar</button>
+</div>
+
+<div class="producto">
+<h3>TV Digital</h3>
+<p>1 Pantalla • 30 días</p>
+<p><b>$2.900</b></p>
+<button onclick="agregar('TV Digital 30 días',2900)">Agregar</button>
+</div>
+
+</div>
+
+<!-- PELICULAS -->
+<h2 style="margin-top:40px;">🎬 Películas Digitales</h2>
+<p style="text-align:center;color:#ccc;">Estrenos • Entrega inmediata</p>
+
+<div class="productos">
+
+<div class="producto">
+<span class="estreno">🔥 ESTRENO</span>
+<img src="img/fnaf2.jpg" class="poster">
+<h3>Five Nights at Freddy's 2</h3>
+<p>Español Latino • Calidad HD</p>
+<p><b>$1.000</b></p>
+<button onclick="agregar('Five Nights at Freddy´s 2 HD Español Latino',1000)">Agregar</button>
+</div>
+
+<div class="producto">
+<span class="estreno">🔥 ESTRENO</span>
+<img src="img/zootopia2.jpg" class="poster">
+<h3>Zootopia 2</h3>
+<p>Español Latino • Calidad HD</p>
+<p><b>$1.000</b></p>
+<button onclick="agregar('Zootopia 2 HD Español Latino',1000)">Agregar</button>
+</div>
+
+</div>
+
+<div class="carrito">
+<h2>🛒 Pedido</h2>
+<div id="lista"></div>
+<h3>Total: $<span id="total">0</span></h3>
+<button onclick="vaciarCarrito()">🗑 Vaciar carrito</button>
+</div>
+
+<div class="checkout">
+<p><b>💳 Pago por transferencia</b></p>
+<p class="alias">SREYES2460.NX.ARG</p>
+<button onclick="enviarPedido()">📲 Enviar pedido</button>
+</div>
+
+<script>
+let carrito=[],total=0;
+
+function agregar(n,p){carrito.push({n,p});total+=p;render();}
+function eliminar(i){total-=carrito[i].p;carrito.splice(i,1);render();}
+function render(){
+  let l=document.getElementById("lista");l.innerHTML="";
+  carrito.forEach((x,i)=>l.innerHTML+=`<div class="item">${x.n} - $${x.p}<button onclick="eliminar(${i})">✖</button></div>`);
+  document.getElementById("total").innerText=total;
+}
+function vaciarCarrito(){carrito=[];total=0;render();}
+function enviarPedido(){
+  if(!carrito.length)return alert("Seleccioná un producto");
+  let m="Hola! Quiero:%0A";
+  carrito.forEach(x=>m+=`• ${x.n} - $${x.p}%0A`);
+  m+=`Total: $${total}`;
+  window.open(`https://wa.me/5491161124784?text=${m}`);
+}
+</script>
+
+</body>
+</html>
