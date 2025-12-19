@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Streaming Premium</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{font-family:Arial,sans-serif;background:#000;color:#fff;margin:0;padding:15px}
+h1,h2{text-align:center;margin:5px 0}
+.productos{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;max-width:1000px;margin:auto}
+.producto{background:#111;border-radius:12px;padding:15px;text-align:center;position:relative;box-shadow:0 4px 10px rgba(0,0,0,.6);transition:.3s}
+
+.producto{opacity:0;transform:translateY(20px);animation:aparecer .6s ease forwards}
+.producto:hover{transform:translateY(-6px) scale(1.05);box-shadow:0 12px 25px rgba(0,0,0,.9)}
+@keyframes aparecer{to{opacity:1;transform:translateY(0)}}
+
+.logo{width:65px;margin-bottom:10px}
+.poster{width:100%;max-width:180px;border-radius:10px;margin-bottom:10px}
+.estreno{position:absolute;top:10px;left:10px;background:#e50914;padding:5px 10px;font-size:12px;font-weight:bold;border-radius:6px}
+.vendido{position:absolute;top:10px;right:10px;background:#f1c40f;color:#000;padding:5px 10px;font-size:12px;font-weight:bold;border-radius:6px}
+.oferta{background:#c0392b;color:#fff;font-size:12px;padding:5px 10px;border-radius:6px;margin-bottom:6px;display:inline-block}
+.stock{font-size:14px;color:#1DB954;font-weight:bold}
+.sin-stock{color:#e74c3c}
+
+button{
+  background:linear-gradient(135deg,#25D366,#1ebc5a);
+  border:none;color:#fff;padding:12px;width:100%;
+  border-radius:8px;font-size:16px;font-weight:bold;
+  cursor:pointer;margin-top:10px;
+  animation:pulso 2s infinite;
+}
+@keyframes pulso{0%{transform:scale(1)}50%{transform:scale(1.05)}100%{transform:scale(1)}}
+button:disabled{background:#555;cursor:not-allowed}
+
+.carrito,.checkout{background:#111;max-width:500px;margin:20px auto;padding:15px;border-radius:10px}
+.item{display:flex;justify-content:space-between;margin-bottom:6px}
+.item button{background:#e74c3c;padding:5px 10px;width:auto;font-size:14px}
+.alias{text-align:center;font-size:18px;font-weight:bold}
+
+.whatsapp-float{
+position:fixed;bottom:20px;right:20px;background:#25D366;color:#fff;
+padding:15px 18px;border-radius:50%;font-size:22px;
+text-decoration:none;box-shadow:0 4px 10px rgba(0,0,0,.6);z-index:999}
+</style>
+</head>
+
+<body>
+
+<h1>📺 Streaming Premium</h1>
+<h2>Activación rápida • Soporte • Garantía</h2>
+
+<div class="productos streaming">
+
+<!-- NETFLIX -->
+<div class="producto">
+<img src="img/netflix.png" class="logo">
+<h3>Netflix</h3>
+<p>1 Pantalla • 30 días</p>
+<p><b>$5.500</b></p>
+<div class="stock" id="stock-netflix">Cargando stock...</div>
+<button id="btn-netflix" onclick="agregarPlataforma('netflix','Netflix - 1 Mes',5500)">Agregar</button>
+</div>
+
+<!-- SPOTIFY -->
+<div class="producto">
+<div class="oferta">🔥 OFERTA</div>
+<img src="img/spotify.png" class="logo">
+<h3>Spotify</h3>
+<p>2 Meses</p>
+<p><b>$3.000</b></p>
+<div class="stock" id="stock-spotify">Cargando stock...</div>
+<button id="btn-spotify" onclick="agregarSpotify()">Agregar</button>
+</div>
+
+<!-- DISNEY -->
+<div class="producto">
+<img src="img/disney.png" class="logo">
+<h3>Disney+</h3>
+<p>1 Pantalla • 30 días</p>
+<p><b>$4.500</b></p>
+<div class="stock" id="stock-disney">Cargando stock...</div>
+<button id="btn-disney" onclick="agregarPlataforma('disney','Disney+ - 1 Mes',4500)">Agregar</button>
+</div>
+
+<!-- PRIME -->
+<div class="producto">
+<img src="img/prime.png" class="logo">
+<h3>Prime Video</h3>
+<p>1 Pantalla • 30 días</p>
+<p><b>$2.900</b></p>
+<div class="stock" id="stock-prime">Cargando stock...</div>
+<button id="btn-prime" onclick="agregarPlataforma('prime','Prime Video - 1 Mes',2900)">Agregar</button>
+</div>
+
+</div>
+
+<div class="carrito">
+<h2>🛒 Pedido</h2>
+<div id="lista"></div>
+<h3>Total: $<span id="total">0</span></h3>
+<button onclick="vaciarCarrito()">🗑 Vaciar carrito</button>
+</div>
+
+<div class="checkout">
+<p><b>💳 Pago por transferencia</b></p>
+<p class="alias">SREYES2460.NX.ARG</p>
+<button onclick="enviarPedido()">📲 Enviar pedido</button>
+</div>
+
+<a href="https://wa.me/5491161124784" class="whatsapp-float" target="_blank">💬</a>
+
+<!-- 🔥 FIREBASE + STOCK REAL -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBLUCC9NNnIPgYe5Lc9rm2InjuGiQq8GNI",
+  authDomain: "spotify-f18b8.firebaseapp.com",
+  databaseURL: "https://spotify-f18b8-default-rtdb.firebaseio.com",
+  projectId: "spotify-f18b8",
+  storageBucket: "spotify-f18b8.firebasestorage.app",
+  messagingSenderId: "46750655712",
+  appId: "1:46750655712:web:4c9a0e1aeca573b5761c85"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+/* 🔹 CARRITO (NO SE MODIFICA) */
+let carrito=[], total=0;
+
+/* 🔹 FUNCIÓN GENÉRICA */
+window.agregarPlataforma=function(key,nombre,precio){
+  const r=ref(db,"stock/"+key);
+  runTransaction(r,(s)=>s>0?s-1:s).then(res=>{
+    if(res.committed) agregar(nombre,precio);
+    else alert("Sin stock disponible");
+  });
+};
+
+/* 🔹 SPOTIFY */
+const refSpotify=ref(db,"stock/spotify");
+onValue(refSpotify,(snap)=>{
+  const s=snap.val();
+  const t=document.getElementById("stock-spotify");
+  const b=document.getElementById("btn-spotify");
+  if(s>0){t.innerText="Stock disponible: "+s;b.disabled=false}
+  else{t.innerText="❌ Sin stock";t.classList.add("sin-stock");b.disabled=true}
+});
+window.agregarSpotify=function(){
+  runTransaction(refSpotify,(s)=>s>0?s-1:s).then(r=>{
+    if(r.committed) agregar("Spotify - 2 Meses",3000);
+  });
+};
+
+/* 🔹 PLATAFORMAS */
+["netflix","disney","prime"].forEach(k=>{
+  const r=ref(db,"stock/"+k);
+  onValue(r,(snap)=>{
+    const s=snap.val();
+    const t=document.getElementById("stock-"+k);
+    const b=document.getElementById("btn-"+k);
+    if(s>0){t.innerText="Stock disponible: "+s;b.disabled=false}
+    else{t.innerText="❌ Sin stock";t.classList.add("sin-stock");b.disabled=true}
+  });
+});
+
+/* 🔹 FUNCIONES EXISTENTES */
+window.agregar=function(n,p){carrito.push({n,p});total+=p;render()}
+window.eliminar=function(i){total-=carrito[i].p;carrito.splice(i,1);render()}
+function render(){
+  let l=document.getElementById("lista");l.innerHTML="";
+  carrito.forEach((x,i)=>l.innerHTML+=`<div class="item">${x.n} - $${x.p}<button onclick="eliminar(${i})">✖</button></div>`);
+  document.getElementById("total").innerText=total;
+}
+window.vaciarCarrito=function(){carrito=[];total=0;render()}
+window.enviarPedido=function(){
+  if(!carrito.length)return alert("Seleccioná un producto");
+  let m="Hola! Quiero contratar:%0A%0A";
+  carrito.forEach(i=>m+=`• ${i.n} - $${i.p}%0A`);
+  m+=`%0A💰 Total: $${total}`;
+  window.open("https://wa.me/5491161124784?text="+m,"_blank");
+}
+</script>
+
+</body>
+</html>
