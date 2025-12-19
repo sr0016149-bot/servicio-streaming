@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Streaming Premium</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{font-family:Arial,sans-serif;background:#000;color:#fff;margin:0;padding:15px}
+h1,h2{text-align:center;margin:5px 0}
+
+.productos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+max-width:1100px;
+margin:auto
+}
+
+.producto{
+background:#111;
+border-radius:12px;
+padding:15px;
+text-align:center;
+position:relative;
+box-shadow:0 4px 10px rgba(0,0,0,.6);
+transition:.3s
+}
+
+.producto:hover{transform:translateY(-6px) scale(1.05)}
+
+.logo{width:65px;margin-bottom:10px}
+.poster{width:100%;max-width:180px;border-radius:10px;margin-bottom:10px}
+
+.estreno{
+position:absolute;top:10px;left:10px;
+background:#e50914;
+padding:5px 10px;
+font-size:12px;font-weight:bold;
+border-radius:6px
+}
+
+.vendido{
+position:absolute;top:10px;right:10px;
+background:#f1c40f;color:#000;
+padding:5px 10px;
+font-size:12px;font-weight:bold;
+border-radius:6px;
+animation:fuego 1.5s infinite
+}
+
+@keyframes fuego{
+0%{transform:scale(1);box-shadow:0 0 5px #f39c12}
+50%{transform:scale(1.1);box-shadow:0 0 15px #e67e22}
+100%{transform:scale(1);box-shadow:0 0 5px #f39c12}
+}
+
+.oferta{
+background:#c0392b;
+color:#fff;
+font-size:12px;
+padding:5px 10px;
+border-radius:6px;
+margin-bottom:6px;
+display:inline-block
+}
+
+.stock{font-size:14px;color:#1DB954;font-weight:bold}
+.sin-stock{color:#e74c3c}
+
+.ultimas{
+margin-top:6px;
+font-size:13px;
+font-weight:bold;
+color:#ff3b3b;
+animation:parpadeo 1.2s infinite
+}
+
+@keyframes parpadeo{
+0%{opacity:1;transform:scale(1)}
+50%{opacity:.4;transform:scale(1.05)}
+100%{opacity:1;transform:scale(1)}
+}
+
+button{
+background:linear-gradient(135deg,#25D366,#1ebc5a);
+border:none;color:#fff;
+padding:12px;width:100%;
+border-radius:8px;
+font-size:16px;font-weight:bold;
+cursor:pointer;margin-top:10px
+}
+
+button:disabled{background:#555;cursor:not-allowed}
+
+.filtros{text-align:center;margin:25px 0}
+.filtros button{width:auto;margin:5px;padding:8px 15px;font-size:14px}
+
+.carrusel{display:flex;gap:15px;overflow-x:auto;padding:10px}
+.carrusel::-webkit-scrollbar{display:none}
+
+.carrito,.checkout{
+background:#111;
+max-width:500px;
+margin:20px auto;
+padding:15px;
+border-radius:10px
+}
+
+.item{display:flex;justify-content:space-between;margin-bottom:6px}
+.item button{background:#e74c3c;padding:5px 10px;width:auto;font-size:14px}
+
+.checkout{
+background:linear-gradient(135deg,#111,#1a1a1a);
+border:1px solid #25D366;
+box-shadow:0 0 15px rgba(37,211,102,.4)
+}
+
+.alias-box{
+background:#000;
+border:1px dashed #25D366;
+border-radius:10px;
+padding:12px;
+margin:10px 0;
+font-size:18px;
+letter-spacing:1px;
+cursor:pointer;
+transition:.3s
+}
+
+.alias-box:hover{background:#111;transform:scale(1.03)}
+.alias-box:active{transform:scale(.97)}
+
+.alias-box span{
+display:block;
+font-size:13px;
+color:#aaa;
+margin-bottom:5px
+}
+
+.whatsapp-float{
+position:fixed;bottom:20px;right:20px;
+background:#25D366;color:#fff;
+padding:15px 18px;
+border-radius:50%;
+font-size:22px;
+text-decoration:none;
+box-shadow:0 4px 10px rgba(0,0,0,.6);
+z-index:999
+}
+</style>
+</head>
+
+<body>
+
+<h1>📺 Streaming Premium</h1>
+<h2>Activación rápida • Soporte • Garantía</h2>
+
+<div class="filtros">
+<button onclick="mostrar('streaming')">📺 Streaming</button>
+<button onclick="mostrar('peliculas')">🎬 Películas</button>
+</div>
+
+<div class="productos streaming"></div>
+
+<h2 style="margin-top:40px;">🎬 Películas Digitales</h2>
+<div class="carrusel peliculas">
+
+<div class="producto">
+<span class="estreno">🔥 ESTRENO</span>
+<img src="img/fnaf2.jpg" class="poster">
+<h3>Five Nights at Freddy's 2</h3>
+<p>Español Latino • HD</p>
+<p><b>$1.000</b></p>
+<button onclick="agregar('Five Nights at Freddy’s 2 HD',1000)">Agregar</button>
+</div>
+
+<div class="producto">
+<span class="estreno">🔥 ESTRENO</span>
+<img src="img/zootopia2.jpg" class="poster">
+<h3>Zootopia 2</h3>
+<p>Español Latino • HD</p>
+<p><b>$1.000</b></p>
+<button onclick="agregar('Zootopia 2 HD',1000)">Agregar</button>
+</div>
+
+<div class="producto">
+<span class="estreno">🔥 ESTRENO</span>
+<img src="img/telefononegro2.jpg" class="poster">
+<h3>El Teléfono Negro 2</h3>
+<p>Español Latino • HD</p>
+<p><b>$1.000</b></p>
+<button onclick="agregar('El Teléfono Negro 2 HD',1000)">Agregar</button>
+</div>
+
+<div class="producto">
+<span class="estreno">🔥 ESTRENO</span>
+<img src="img/losextranos2.jpg" class="poster">
+<h3>Los Extraños: Capítulo 2</h3>
+<p>Español Latino • HD</p>
+<p><b>$1.000</b></p>
+<button onclick="agregar('Los Extraños Capítulo 2 HD',1000)">Agregar</button>
+</div>
+
+<div class="producto">
+<span class="estreno">🔥 ESTRENO</span>
+<img src="img/animalespeligrosos.jpg" class="poster">
+<h3>Animales Peligrosos</h3>
+<p>Español Latino • HD</p>
+<p><b>$1.000</b></p>
+<button onclick="agregar('Animales Peligrosos HD',1000)">Agregar</button>
+</div>
+
+</div>
+
+<div class="carrito">
+<h2>🛒 Pedido</h2>
+<div id="lista"></div>
+<h3>Total: $<span id="total">0</span></h3>
+<button onclick="vaciarCarrito()">🗑 Vaciar carrito</button>
+</div>
+
+<div class="checkout">
+<div class="alias-box" onclick="copiarAlias()">
+<span>💳 Alias para pagar (tocá para copiar)</span>
+<b id="alias-texto">SREYES2460.NX.ARG</b>
+</div>
+<p id="copiado-msg" style="display:none;color:#25D366;text-align:center;font-size:14px;">
+✔ Alias copiado
+</p>
+<button onclick="enviarPedido()">📲 Enviar pedido</button>
+</div>
+
+<a href="https://wa.me/5491161124784" class="whatsapp-float">💬</a>
+
+<script>
+let stock={
+spotify:1,
+netflix:5,hbomax:5,apple:5,youtube:5,disney:5,prime:5,
+paramount:5,vix:5,viki:5,crunchyroll:5,tvdigital:5
+};
+
+let carrito=[],total=0;
+
+const plataformas=[
+["netflix","Netflix","img/netflix.png",5500,true],
+["hbomax","HBO Max","img/hbomax.png",3000],
+["apple","Apple TV+","img/apple.png",2800],
+["youtube","YouTube Premium","img/youtube.png",3500],
+["spotify","Spotify","img/spotify.png",3000],
+["disney","Disney+","img/disney.png",4500],
+["prime","Prime Video","img/prime.png",2900],
+["paramount","Paramount+","img/paramount.png",2800],
+["vix","Vix Premium","img/vix.png",2500],
+["viki","Viki Rakuten","img/viki.png",2800],
+["crunchyroll","Crunchyroll","img/crunchyroll.png",2900],
+["tvdigital","TV Digital","img/tvdigital.png",2900]
+];
+
+const cont=document.querySelector(".productos.streaming");
+plataformas.forEach(p=>{
+cont.innerHTML+=`
+<div class="producto">
+${p[4]?'<span class="vendido">🔥 LO MÁS VENDIDO</span>':""}
+${p[0]==="spotify"?'<div class="oferta">🔥 OFERTA</div>':""}
+<img src="${p[2]}" class="logo">
+<h3>${p[1]}</h3>
+<p><b>$${p[3]}</b></p>
+<div class="stock" id="stock-${p[0]}"></div>
+<button id="btn-${p[0]}" onclick="${p[0]==='spotify'?'agregarSpotify()':`agregarPlataforma('${p[0]}','${p[1]} - 1 Mes',${p[3]})`}">Agregar</button>
+</div>`;
+});
+
+function actualizarStock(){
+for(let k in stock){
+let t=document.getElementById("stock-"+k);
+let b=document.getElementById("btn-"+k);
+if(!t||!b)continue;
+let aviso=document.getElementById("ultimas-"+k);
+if(aviso)aviso.remove();
+
+if(stock[k]>0){
+t.innerText="Stock disponible: "+stock[k];
+b.disabled=false;
+if(stock[k]<=2){
+let u=document.createElement("div");
+u.className="ultimas";
+u.id="ultimas-"+k;
+u.innerText="⚠️ ÚLTIMAS UNIDADES";
+t.after(u);
+}
+}else{
+t.innerText="❌ Sin stock";
+b.disabled=true;
+}
+}
+}
+
+function agregarPlataforma(k,n,p){
+if(stock[k]>0){stock[k]--;agregar(n,p);actualizarStock()}
+else alert("Sin stock disponible");
+}
+function agregarSpotify(){
+if(stock.spotify>0){stock.spotify--;agregar("Spotify - 2 Meses",3000);actualizarStock()}
+else alert("Sin stock disponible");
+}
+
+function agregar(n,p){carrito.push({n,p});total+=p;render()}
+function eliminar(i){total-=carrito[i].p;carrito.splice(i,1);render()}
+function render(){
+let l=document.getElementById("lista");l.innerHTML="";
+carrito.forEach((x,i)=>l.innerHTML+=`<div class="item">${x.n} - $${x.p}<button onclick="eliminar(${i})">✖</button></div>`);
+document.getElementById("total").innerText=total;
+}
+function vaciarCarrito(){carrito=[];total=0;render()}
+function enviarPedido(){
+if(!carrito.length)return alert("Seleccioná un producto");
+let m="Hola! Quiero contratar:%0A%0A";
+carrito.forEach(i=>m+=`• ${i.n} - $${i.p}%0A`);
+m+=`%0A💰 Total: $${total}`;
+window.open("https://wa.me/5491161124784?text="+m,"_blank");
+}
+function mostrar(t){
+document.querySelector('.streaming').style.display=t==='streaming'?'grid':'none';
+document.querySelector('.peliculas').style.display=t==='peliculas'?'flex':'none';
+}
+
+function copiarAlias(){
+const texto=document.getElementById("alias-texto").innerText;
+navigator.clipboard.writeText(texto).then(()=>{
+const msg=document.getElementById("copiado-msg");
+msg.style.display="block";
+setTimeout(()=>msg.style.display="none",2000);
+});
+}
+
+actualizarStock();
+</script>
+
+</body>
+</html>
