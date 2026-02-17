@@ -6,19 +6,105 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{font-family:Arial;background:#000;color:#fff;margin:0;padding:15px}
+body{
+font-family:Arial;
+background:linear-gradient(135deg,#000000,#141414,#1f1f1f);
+color:#fff;
+margin:0;
+padding:15px
+}
+
 h1,h2{text-align:center}
-.productos{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;max-width:1100px;margin:auto}
-.producto{background:#111;border-radius:12px;padding:15px;text-align:center;box-shadow:0 4px 10px rgba(0,0,0,.6)}
+
+.productos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+max-width:1100px;
+margin:auto
+}
+
+.producto{
+background:#151515;
+border-radius:15px;
+padding:18px;
+text-align:center;
+box-shadow:0 4px 15px rgba(0,0,0,.7);
+transition:all .3s ease;
+transform:scale(1)
+}
+
+.producto:hover{
+transform:translateY(-6px) scale(1.03);
+box-shadow:0 8px 25px rgba(0,0,0,.9)
+}
+
 .logo{width:65px;margin-bottom:10px}
 .poster{width:100%;max-width:180px;border-radius:10px}
-button{background:#25D366;border:none;color:#fff;padding:12px;width:100%;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer}
-button:disabled{background:#555}
-.stock{color:#1DB954;font-weight:bold;margin-bottom:5px}
-.carrusel{display:flex;gap:15px;overflow-x:auto}
-.carrito,.checkout{background:#111;max-width:500px;margin:20px auto;padding:15px;border-radius:10px}
-.item{display:flex;justify-content:space-between}
-.whatsapp-float{position:fixed;bottom:20px;right:20px;background:#25D366;color:#fff;padding:15px;border-radius:50%;font-size:22px}
+
+button{
+background:#25D366;
+border:none;
+color:#fff;
+padding:12px;
+width:100%;
+border-radius:8px;
+font-size:15px;
+font-weight:bold;
+cursor:pointer;
+transition:.2s
+}
+
+button:hover{opacity:.85}
+
+.carrusel{display:flex;gap:15px;overflow-x:auto;padding-bottom:10px}
+
+.carrito,.checkout{
+background:#151515;
+max-width:500px;
+margin:25px auto;
+padding:15px;
+border-radius:12px;
+box-shadow:0 4px 15px rgba(0,0,0,.7)
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:8px;
+font-size:14px;
+opacity:0;
+transform:translateY(10px);
+animation:fadeIn .3s forwards
+}
+
+.eliminar{
+background:#ff3b3b;
+padding:5px 10px;
+border-radius:6px;
+font-size:12px;
+cursor:pointer
+}
+
+.whatsapp-float{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#25D366;
+color:#fff;
+padding:15px;
+border-radius:50%;
+font-size:22px;
+text-decoration:none
+}
+
+@keyframes fadeIn{
+to{
+opacity:1;
+transform:translateY(0)
+}
+}
 </style>
 </head>
 
@@ -46,10 +132,9 @@ button:disabled{background:#555}
 <a href="https://wa.me/5491161124784" class="whatsapp-float">💬</a>
 
 <script>
-let totalCompra = 0;
-let carrito = [];
+let carrito=[];
 
-const plataformas = [
+const plataformas=[
 ["Netflix",5500,"img/netflix.png"],
 ["Disney+",4500,"img/disney.png"],
 ["Disney+ Estándar",3500,"img/disney.png"],
@@ -64,7 +149,7 @@ const plataformas = [
 ["TV Digital",3900,"img/tvdigital.png"]
 ];
 
-const peliculas = [
+const peliculas=[
 ["Avatar: Fuego y Cenizas","img/avatar-fuego-cenizas.jpg"],
 ["Five Nights at Freddy's 2","img/fnaf2.jpg"],
 ["Zootopia 2","img/zootopia2.jpg"],
@@ -73,56 +158,77 @@ const peliculas = [
 ["Animales Peligrosos","img/animalespeligrosos.jpg"]
 ];
 
-const cont = document.getElementById("streaming");
+function formatear(num){
+return num.toLocaleString("es-AR");
+}
+
+const cont=document.getElementById("streaming");
 plataformas.forEach(p=>{
 cont.innerHTML+=`
 <div class="producto">
 <img src="${p[2]}" class="logo">
 <h3>${p[0]}</h3>
-<p>$${p[1]}</p>
+<p>$${formatear(p[1])}</p>
 <button onclick="agregar('${p[0]}',${p[1]})">Agregar</button>
 </div>`;
 });
 
-const peliCont = document.getElementById("peliculas");
+const peliCont=document.getElementById("peliculas");
 peliculas.forEach(p=>{
 peliCont.innerHTML+=`
 <div class="producto">
 <img src="${p[1]}" class="poster">
 <h3>${p[0]}</h3>
-<p>$1000</p>
+<p>$1.000</p>
 <button onclick="agregar('${p[0]} HD',1000)">Agregar</button>
 </div>`;
 });
 
 function agregar(nombre,precio){
 carrito.push({nombre,precio});
-totalCompra+=precio;
 render();
 }
 
 function render(){
-document.getElementById("lista").innerHTML="";
-carrito.forEach(i=>{
-document.getElementById("lista").innerHTML+=`<div class="item">${i.nombre} - $${i.precio}</div>`;
+let total=0;
+let lista=document.getElementById("lista");
+lista.innerHTML="";
+
+carrito.forEach((i,index)=>{
+total+=i.precio;
+lista.innerHTML+=`
+<div class="item">
+<span>${i.nombre} - $${formatear(i.precio)}</span>
+<span class="eliminar" onclick="eliminar(${index})">X</span>
+</div>`;
 });
-document.getElementById("total").innerText=totalCompra;
+
+document.getElementById("total").innerText=formatear(total);
+}
+
+function eliminar(index){
+carrito.splice(index,1);
+render();
 }
 
 function vaciar(){
 carrito=[];
-totalCompra=0;
 render();
 }
 
 function enviarPedido(){
 if(!carrito.length)return alert("Seleccioná un producto");
+let total=0;
 let msg="Hola! Quiero contratar:%0A";
-carrito.forEach(i=>msg+=`• ${i.nombre} - $${i.precio}%0A`);
-msg+=`Total: $${totalCompra}`;
+carrito.forEach(i=>{
+total+=i.precio;
+msg+=`• ${i.nombre} - $${formatear(i.precio)}%0A`;
+});
+msg+=`Total: $${formatear(total)}`;
 window.open("https://wa.me/5491161124784?text="+msg);
 }
 </script>
 
 </body>
 </html>
+
