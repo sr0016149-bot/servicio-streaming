@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Streaming Premium</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+font-family:'Poppins',sans-serif;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:#fff;
+margin:0;
+padding:15px;
+min-height:100vh
+}
+
+h1,h2{
+text-align:center;
+font-weight:600;
+letter-spacing:1px
+}
+
+.destacados{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.15);
+padding:15px;
+border-radius:20px;
+max-width:900px;
+margin:20px auto;
+text-align:center
+}
+
+.destacados span{
+display:inline-block;
+background:rgba(29,185,84,0.2);
+border:1px solid rgba(29,185,84,0.4);
+padding:6px 14px;
+margin:5px;
+border-radius:30px;
+font-size:14px
+}
+
+.productos{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+max-width:1100px;
+margin:auto
+}
+
+.producto{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.15);
+border-radius:20px;
+padding:18px;
+text-align:center;
+transition:.4s;
+box-shadow:0 8px 32px rgba(0,0,0,0.3)
+}
+
+.producto:hover{
+transform:translateY(-8px) scale(1.03);
+border:1px solid rgba(29,185,84,0.6)
+}
+
+.combo{
+border:1px solid rgba(29,185,84,0.6)
+}
+
+.logo{width:65px;margin-bottom:10px}
+.poster{width:100%;max-width:180px;border-radius:12px}
+
+.ahorro{
+color:#1DB954;
+font-weight:600;
+font-size:14px
+}
+
+button{
+background:linear-gradient(135deg,#1DB954,#1ed760);
+border:none;
+color:#fff;
+padding:12px;
+width:100%;
+border-radius:30px;
+font-size:14px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+box-shadow:0 4px 15px rgba(29,185,84,0.4)
+}
+
+button:hover{
+transform:scale(1.05);
+box-shadow:0 6px 20px rgba(29,185,84,0.6)
+}
+
+.carrusel{
+display:flex;
+gap:15px;
+overflow-x:auto;
+padding-bottom:10px
+}
+
+.carrito,.checkout{
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,0.15);
+max-width:500px;
+margin:25px auto;
+padding:20px;
+border-radius:20px
+}
+
+.metodos{
+text-align:center;
+margin-top:15px;
+font-size:14px;
+opacity:.85
+}
+
+.item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px
+}
+
+.eliminar{
+background:#ff4d4d;
+padding:6px 12px;
+border-radius:20px;
+font-size:12px;
+cursor:pointer
+}
+
+.whatsapp-float{
+position:fixed;
+bottom:20px;
+right:20px;
+background:linear-gradient(135deg,#1DB954,#1ed760);
+color:#fff;
+padding:15px;
+border-radius:50%;
+font-size:22px;
+text-decoration:none;
+box-shadow:0 6px 20px rgba(29,185,84,0.6)
+}
+</style>
+</head>
+
+<body>
+
+<h1>📺 Streaming Premium</h1>
+<h2>Activación rápida • Garantía</h2>
+
+<div class="destacados">
+<h3>⭐ Más elegido por clientes</h3>
+<span>Netflix</span>
+<span>Disney+</span>
+<span>TV Digital</span>
+</div>
+
+<div class="productos" id="streaming"></div>
+
+<h2>🎬 Películas</h2>
+<div class="carrusel" id="peliculas"></div>
+
+<div class="carrito">
+<h2>🛒 Pedido</h2>
+<div id="lista"></div>
+<h3>Total: $<span id="total">0</span></h3>
+<button onclick="vaciar()">Vaciar carrito</button>
+</div>
+
+<div class="checkout">
+<button onclick="enviarPedido()">📲 Enviar pedido</button>
+<div class="metodos">
+💳 Aceptamos:<br>
+Mercado Pago • Transferencia • Débito • Crédito
+</div>
+</div>
+
+<a href="https://wa.me/5491161124784" class="whatsapp-float">💬</a>
+
+<script>
+let carrito=[];
+
+const plataformas=[
+["Netflix",5500,"img/netflix.png"],
+["Disney+",4500,"img/disney.png"],
+["Disney+ Estándar",3500,"img/disney.png"],
+["HBO Max",3000,"img/hbomax.png"],
+["Prime Video",2900,"img/prime.png"],
+["Apple TV+",2800,"img/apple.png"],
+["YouTube Premium",3500,"img/youtube.png"],
+["Paramount+",2800,"img/paramount.png"],
+["Crunchyroll",2900,"img/crunchyroll.png"],
+["Viki Rakuten",2800,"img/viki.png"],
+["Vix Premium",2500,"img/vix.png"],
+["TV Digital",3900,"img/tvdigital.png"]
+];
+
+const combo=["Combo Netflix + Disney+",9000,1000];
+
+const peliculas=[
+["Avatar: Fuego y Cenizas","img/avatar-fuego-cenizas.jpg"],
+["Five Nights at Freddy's 2","img/fnaf2.jpg"],
+["Zootopia 2","img/zootopia2.jpg"],
+["El Teléfono Negro 2","img/telefononegro2.jpg"],
+["Los Extraños: Capítulo 2","img/losextranos2.jpg"],
+["Animales Peligrosos","img/animalespeligrosos.jpg"]
+];
+
+function formatear(num){
+return num.toLocaleString("es-AR");
+}
+
+const cont=document.getElementById("streaming");
+
+plataformas.forEach(p=>{
+cont.innerHTML+=`
+<div class="producto">
+<img src="${p[2]}" class="logo">
+<h3>${p[0]}</h3>
+<p>$${formatear(p[1])}</p>
+<button onclick="agregar('${p[0]}',${p[1]})">Agregar</button>
+</div>`;
+});
+
+cont.innerHTML+=`
+<div class="producto combo">
+<h3>${combo[0]}</h3>
+<p>$${formatear(combo[1])}</p>
+<p class="ahorro">Ahorrás $${formatear(combo[2])}</p>
+<button onclick="agregar('${combo[0]}',${combo[1]})">Agregar Combo</button>
+</div>`;
+
+const peliCont=document.getElementById("peliculas");
+peliculas.forEach(p=>{
+peliCont.innerHTML+=`
+<div class="producto">
+<img src="${p[1]}" class="poster">
+<h3>${p[0]}</h3>
+<p>$1.000</p>
+<button onclick="agregar('${p[0]} HD',1000)">Agregar</button>
+</div>`;
+});
+
+function agregar(nombre,precio){
+carrito.push({nombre,precio});
+render();
+}
+
+function render(){
+let total=0;
+let lista=document.getElementById("lista");
+lista.innerHTML="";
+carrito.forEach((i,index)=>{
+total+=i.precio;
+lista.innerHTML+=`
+<div class="item">
+<span>${i.nombre} - $${formatear(i.precio)}</span>
+<span class="eliminar" onclick="eliminar(${index})">X</span>
+</div>`;
+});
+document.getElementById("total").innerText=formatear(total);
+}
+
+function eliminar(index){
+carrito.splice(index,1);
+render();
+}
+
+function vaciar(){
+carrito=[];
+render();
+}
+
+function enviarPedido(){
+if(!carrito.length)return alert("Seleccioná un producto");
+let total=0;
+let msg="Hola! Quiero contratar:%0A";
+carrito.forEach(i=>{
+total+=i.precio;
+msg+=`• ${i.nombre} - $${formatear(i.precio)}%0A`;
+});
+msg+=`Total: $${formatear(total)}`;
+window.open("https://wa.me/5491161124784?text="+msg);
+}
+</script>
+
+</body>
+</html>
