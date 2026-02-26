@@ -250,7 +250,7 @@ document.getElementById("peliculas").innerHTML+=`
 });
 
 function iniciarContador(id){
-const fecha=new Date("2026-03-25T23:59:59").getTime();
+const fechaLimite = new Date("2026-02-20T23:59:59").getTime();
 const timer=document.getElementById(id);
 const card=timer.closest(".producto");
 const boton=card.querySelector("button");
@@ -334,4 +334,5 @@ window.open("https://wa.me/5491161124784?text="+msg);
 </script>
 
 </body>
+
 </html>
