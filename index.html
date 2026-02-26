@@ -305,7 +305,7 @@ peliCont.innerHTML+=`
 });
 
 function iniciarContador(id){
-const fecha=new Date("2026-02-25T23:59:59").getTime();
+const fechaLimite = new Date("2026-02-20T23:59:59").getTime();
 setInterval(()=>{
 const ahora=new Date().getTime();
 const dist=fecha-ahora;
@@ -380,3 +380,4 @@ window.open("https://wa.me/5491161124784?text="+msg);
 </body>
 
 </html>
+
