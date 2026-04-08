@@ -320,8 +320,45 @@ else{p.style.display=p.dataset.categoria===cat?"block":"none";}
 }
 
 function agregar(nombre,precio){
+let boton = event.target;
+let card = boton.closest(".producto");
+let img = card.querySelector("img");
+
+let clone = img.cloneNode(true);
+let rect = img.getBoundingClientRect();
+
+clone.style.left = rect.left+"px";
+clone.style.top = rect.top+"px";
+clone.style.width = rect.width+"px";
+clone.classList.add("fly");
+
+document.body.appendChild(clone);
+
+let carritoBox = document.querySelector(".carrito");
+let destino = carritoBox.getBoundingClientRect();
+
+setTimeout(()=>{
+clone.style.left = destino.left+"px";
+clone.style.top = destino.top+"px";
+clone.style.width = "20px";
+clone.style.opacity = "0.3";
+},10);
+
+setTimeout(()=>{
+clone.remove();
+},800);
+
 carrito.push({nombre,precio});
 render();
+
+// feedback visual
+boton.innerText="✔ Agregado";
+boton.style.background="#28a745";
+
+setTimeout(()=>{
+boton.innerText="Agregar";
+boton.style.background="";
+},1000);
 }
 
 function render(){
